@@ -1,0 +1,451 @@
+/* ============================================
+   TOKENS
+   ============================================ */
+:root {
+  --ink: #0B1220;
+  --ink-2: #101B2D;
+  --ink-3: #16233A;
+  --blueprint: #5EC8E0;
+  --blueprint-dim: rgba(94, 200, 224, 0.22);
+  --blueprint-faint: rgba(94, 200, 224, 0.08);
+  --paper: #EAF1F3;
+  --slate: #8695A6;
+  --steel: #C9702F;
+
+  --font-display: 'JetBrains Mono', 'Courier New', monospace;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --max-w: 1180px;
+  --edge: clamp(24px, 5vw, 72px);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+ul { list-style: none; margin: 0; padding: 0; }
+
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+
+/* ============================================
+   CROP MARKS (signature detail)
+   ============================================ */
+.crop {
+  position: fixed;
+  width: 22px;
+  height: 22px;
+  border-color: var(--blueprint-dim);
+  border-style: solid;
+  border-width: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+.crop-tl { top: 14px; left: 14px; border-top-width: 1px; border-left-width: 1px; }
+.crop-tr { top: 14px; right: 14px; border-top-width: 1px; border-right-width: 1px; }
+.crop-bl { bottom: 14px; left: 14px; border-bottom-width: 1px; border-left-width: 1px; }
+.crop-br { bottom: 14px; right: 14px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* ============================================
+   NAV
+   ============================================ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px var(--edge);
+  background: linear-gradient(to bottom, rgba(11,18,32,0.9), transparent);
+}
+
+.nav-mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+}
+.nav-mark .dot { color: var(--steel); }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+.nav-links a {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--slate);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+.nav-links a:hover { color: var(--blueprint); }
+.nav-links .idx {
+  color: var(--blueprint-dim);
+  font-size: 11px;
+}
+
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  padding: 120px var(--edge) 80px;
+  overflow: hidden;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.grid-field {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--blueprint-faint) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-faint) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 70% 60% at 30% 40%, black 40%, transparent 85%);
+  z-index: 0;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--blueprint);
+  margin: 0 0 24px;
+  text-transform: uppercase;
+}
+
+.hero-name {
+  font-size: clamp(2.6rem, 6.2vw, 4.6rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.hero-role {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  color: var(--blueprint);
+  margin: 20px 0 0;
+}
+
+.hero-tag {
+  font-size: 1.05rem;
+  color: var(--slate);
+  max-width: 46ch;
+  margin: 18px 0 0;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.btn {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  padding: 14px 24px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+.btn-primary {
+  background: var(--blueprint);
+  color: var(--ink);
+  font-weight: 600;
+}
+.btn-primary:hover { background: #7ed4e8; }
+.btn-ghost {
+  border-color: var(--blueprint-dim);
+  color: var(--paper);
+}
+.btn-ghost:hover { border-color: var(--blueprint); color: var(--blueprint); }
+
+/* stack diagram */
+.stack-diagram {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+.stack-diagram svg { width: 100%; max-width: 320px; height: auto; overflow: visible; }
+
+.block rect {
+  fill: var(--ink-2);
+  stroke: var(--blueprint-dim);
+  stroke-width: 1;
+}
+.block-label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  fill: var(--blueprint);
+  font-weight: 600;
+}
+.block-code {
+  font-family: var(--font-display);
+  font-size: 10px;
+  fill: var(--slate);
+}
+.dim-line, .dim-tick { stroke: var(--blueprint-dim); stroke-width: 1; }
+.dim-text {
+  font-family: var(--font-display);
+  font-size: 9px;
+  fill: var(--slate);
+  letter-spacing: 0.1em;
+}
+
+.block {
+  opacity: 0;
+  transform: translateX(24px);
+  animation: slideIn 0.6s ease forwards;
+}
+.block[data-delay="0"] { animation-delay: 0.15s; }
+.block[data-delay="1"] { animation-delay: 0.35s; }
+.block[data-delay="2"] { animation-delay: 0.55s; }
+.block[data-delay="3"] { animation-delay: 0.75s; }
+
+@keyframes slideIn {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.title-block {
+  position: absolute;
+  right: var(--edge);
+  bottom: 40px;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: 11px;
+  border-top: 1px solid var(--blueprint-dim);
+  padding-top: 10px;
+  min-width: 220px;
+}
+.tb-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--slate);
+  padding: 3px 0;
+  gap: 24px;
+}
+.tb-row span:last-child { color: var(--paper); }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; padding-top: 140px; }
+  .stack-diagram { margin-top: 60px; }
+  .title-block { position: static; margin-top: 48px; }
+}
+
+/* ============================================
+   SHEETS (sections)
+   ============================================ */
+.sheet {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 100px var(--edge);
+  border-top: 1px solid var(--blueprint-dim);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.sheet.in-view { opacity: 1; transform: translateY(0); }
+
+.sheet-label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--steel);
+  text-transform: uppercase;
+  margin: 0 0 40px;
+}
+
+.sheet-body h3 {
+  font-size: 1.5rem;
+  color: var(--paper);
+  margin-bottom: 8px;
+}
+
+/* about */
+.about-body .lead {
+  font-size: 1.35rem;
+  color: var(--paper);
+  max-width: 62ch;
+  line-height: 1.5;
+}
+.about-body p {
+  max-width: 62ch;
+  color: var(--slate);
+}
+
+/* skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+.skill-col h3 {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--blueprint);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--blueprint-dim);
+  padding-bottom: 12px;
+}
+.skill-col li {
+  color: var(--paper);
+  padding: 6px 0;
+  font-size: 0.95rem;
+}
+@media (max-width: 800px) {
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* projects */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--blueprint-dim);
+}
+.project {
+  background: var(--ink);
+  padding: 40px;
+  transition: background 0.25s ease;
+}
+.project:hover { background: var(--ink-2); }
+.project-tag {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--steel);
+  margin-bottom: 14px;
+}
+.project h3 { font-size: 1.4rem; margin-bottom: 12px; }
+.project p { color: var(--slate); max-width: 68ch; margin-bottom: 20px; }
+.project-stack {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.project-stack span {
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: var(--blueprint);
+  border: 1px solid var(--blueprint-dim);
+  padding: 5px 10px;
+  border-radius: 2px;
+}
+.project-link {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--paper);
+  border-bottom: 1px solid var(--blueprint);
+  padding-bottom: 2px;
+}
+.project-link:hover { color: var(--blueprint); }
+
+/* experience */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+.tl-item {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 24px;
+}
+.tl-marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--blueprint);
+  margin-top: 8px;
+}
+.tl-content h3 { font-size: 1.2rem; margin-bottom: 4px; }
+.tl-meta {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--steel);
+  margin: 0 0 10px;
+}
+.tl-content p:last-child { color: var(--slate); max-width: 60ch; }
+
+/* contact */
+.sheet-contact { text-align: left; }
+.contact-heading {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--paper);
+  margin-bottom: 16px;
+}
+.contact-sub { color: var(--slate); max-width: 52ch; margin-bottom: 36px; }
+.contact-links {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.contact-links a {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--paper);
+  border-bottom: 1px solid var(--blueprint-dim);
+  padding-bottom: 4px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.contact-links a:hover { color: var(--blueprint); border-color: var(--blueprint); }
+
+/* footer */
+.site-footer {
+  text-align: center;
+  padding: 40px var(--edge) 60px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--slate);
+}
+
+/* focus visibility */
+a:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 3px;
+}
